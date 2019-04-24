@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class KMeans {
@@ -44,5 +45,23 @@ public class KMeans {
             somatorio += Math.pow(e.getCoordenadas().get(i) - c.getCoordenadas().get(i), 2.0);
         }
         return Math.sqrt(somatorio);
+    }
+
+
+    public void executa(){
+        Boolean moveu;
+        do{
+            moveu = false;
+            atribuiConjuntos();
+            for(Centroide c : this.centroides){
+                if(c.moveCentroide()){
+                    moveu = true;
+                }
+            }
+        }while(moveu);
+    }
+
+    public void estabilizou(){
+
     }
 }
