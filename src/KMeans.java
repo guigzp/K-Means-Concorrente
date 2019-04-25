@@ -50,6 +50,9 @@ public class KMeans {
     public void executa(){
         Boolean moveu;
         do{
+            for (Centroide c : this.centroides){
+                c.getElementos().clear();
+            }
             moveu = false;
             atribuiConjuntos();
             for(Centroide c : this.centroides){

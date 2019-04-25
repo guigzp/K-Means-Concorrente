@@ -41,7 +41,7 @@ public class Centroide {
             aux.add(soma);
             soma = 0;
         }
-        this.elementos.clear();
+        //this.elementos.clear();
         if(this.coordenadas.equals(aux)){
             return false;
         }else{

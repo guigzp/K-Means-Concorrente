@@ -11,7 +11,7 @@ public class Main {
         System.out.print("Insira o nome do arquivo de entrada: ");
         //Scanner entrada = new Scanner(System.in);
         //String nomeArquivo = entrada.nextLine();
-        String nomeArquivo = "bases/int_base_59.data";
+        String nomeArquivo = "bases/int_base_1601.data";
         ArrayList<Integer> aux = new ArrayList<>();
         try {
             FileReader arq = new FileReader(nomeArquivo);
@@ -35,7 +35,7 @@ public class Main {
         System.out.print("Insira o nome do arquivo de entrada: ");
         //Scanner entrada = new Scanner(System.in);
         //String nomeArquivo = entrada.nextLine();
-        String nomeArquivo = "bases/int_centroid_59_20.data";
+        String nomeArquivo = "bases/int_centroid_1601_20.data";
         ArrayList<Integer> aux = new ArrayList<>();
         try {
             FileReader arq = new FileReader(nomeArquivo);
@@ -62,5 +62,8 @@ public class Main {
         lerArquivoCentroide(centroides);
         KMeans teste = new KMeans(centroides,elementos);
         teste.executa();
+        for (Centroide c : teste.getCentroides()){
+            System.out.println(c.getElementos().size());
+        }
     }
 }
