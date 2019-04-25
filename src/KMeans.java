@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class KMeans {
@@ -25,10 +24,10 @@ public class KMeans {
     }
 
     public void melhorCentroide(Elemento e){
-        Double menorDistancia = Double.MAX_VALUE;
+        Integer menorDistancia = Integer.MAX_VALUE;
         Centroide melhor = new Centroide();
         for (Centroide c : this.centroides){
-            Double aux = calculaDistancia(e, c);
+            int aux = calculaDistancia(e, c);
             if (menorDistancia > aux){
                 menorDistancia = aux;
                 melhor = c;
@@ -38,13 +37,13 @@ public class KMeans {
         this.centroides.get(aux2).addElemento(e);
     }
 
-    public Double calculaDistancia(Elemento e, Centroide c){
+    public int calculaDistancia(Elemento e, Centroide c){
         int qtd = e.getCoordenadas().size();
-        Double somatorio = 0.0;
+        int somatorio = 0;
         for (int i = 0; i < qtd; i++){
             somatorio += Math.pow(e.getCoordenadas().get(i) - c.getCoordenadas().get(i), 2.0);
         }
-        return Math.sqrt(somatorio);
+        return (int) Math.sqrt(somatorio);
     }
 
 
@@ -59,9 +58,5 @@ public class KMeans {
                 }
             }
         }while(moveu);
-    }
-
-    public void estabilizou(){
-
     }
 }

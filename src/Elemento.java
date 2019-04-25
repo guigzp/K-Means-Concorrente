@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class Elemento {
-    private ArrayList<Double> coordenadas = new ArrayList<>();
+    private ArrayList<Integer> coordenadas = new ArrayList<>();
 
-    public Elemento(ArrayList<Double> coordenadas) {
+    public Elemento(ArrayList<Integer> coordenadas) {
         this.coordenadas = (ArrayList) coordenadas.clone();
     }
 
-    public ArrayList<Double> getCoordenadas() {
+    public ArrayList<Integer> getCoordenadas() {
         return this.coordenadas;
     }
 }

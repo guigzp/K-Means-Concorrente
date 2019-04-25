@@ -1,12 +1,9 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Scanner;
-import static java.lang.Double.parseDouble;
+import static java.lang.Integer.parseInt;
 
 public class Main {
 
@@ -15,7 +12,7 @@ public class Main {
         //Scanner entrada = new Scanner(System.in);
         //String nomeArquivo = entrada.nextLine();
         String nomeArquivo = "bases/int_base_59.data";
-        ArrayList<Double> aux = new ArrayList<>();
+        ArrayList<Integer> aux = new ArrayList<>();
         try {
             FileReader arq = new FileReader(nomeArquivo);
             BufferedReader lerArq = new BufferedReader(arq);
@@ -23,7 +20,7 @@ public class Main {
             while ((linha = lerArq.readLine()) != null) {
                 String[] lido = linha.split(",");
                 for (int i = 0; i < lido.length; i++){
-                    aux.add(parseDouble(lido[i]));
+                    aux.add(parseInt(lido[i]));
                 }
                 elementos.add( new Elemento(aux));
                 aux.clear();
@@ -39,7 +36,7 @@ public class Main {
         //Scanner entrada = new Scanner(System.in);
         //String nomeArquivo = entrada.nextLine();
         String nomeArquivo = "bases/int_centroid_59_20.data";
-        ArrayList<Double> aux = new ArrayList<>();
+        ArrayList<Integer> aux = new ArrayList<>();
         try {
             FileReader arq = new FileReader(nomeArquivo);
             BufferedReader lerArq = new BufferedReader(arq);
@@ -47,7 +44,7 @@ public class Main {
             while ((linha = lerArq.readLine()) != null) {
                 String[] lido = linha.split(",");
                 for (int i = 0; i < lido.length; i++){
-                    aux.add(parseDouble(lido[i]));
+                    aux.add(parseInt(lido[i]));
                 }
                 centroides.add( new Centroide(aux));
                 aux.clear();

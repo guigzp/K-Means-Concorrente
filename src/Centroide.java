@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Centroide {
-    private ArrayList<Double> coordenadas = new ArrayList<>();
+    private ArrayList<Integer> coordenadas = new ArrayList<>();
     private ArrayList<Elemento> elementos = new ArrayList<>();
 
-    public Centroide(ArrayList<Double> coordenadas) {
+    public Centroide(ArrayList<Integer> coordenadas) {
         this.coordenadas = (ArrayList) coordenadas.clone();
     }
 
@@ -17,7 +17,7 @@ public class Centroide {
         this.elementos.add(e);
     }
 
-    public ArrayList<Double> getCoordenadas() {
+    public ArrayList<Integer> getCoordenadas() {
         return coordenadas;
     }
 
@@ -31,14 +31,15 @@ public class Centroide {
 
     public Boolean moveCentroide(){
         int qtdCoordenadas = this.coordenadas.size();
-        ArrayList<Double> aux = new ArrayList<>();
-        Double soma = 0.0;
+        ArrayList<Integer> aux = new ArrayList<>();
+        int soma = 0;
         for(int i = 0; i < qtdCoordenadas; i++){
             for(Elemento e: this.elementos){
                 soma += e.getCoordenadas().get(i);
             }
+            soma /=  this.elementos.size();
             aux.add(soma);
-            soma = 0.0;
+            soma = 0;
         }
         this.elementos.clear();
         if(this.coordenadas.equals(aux)){
