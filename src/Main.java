@@ -55,13 +55,17 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException{
         ArrayList<Elemento> elementos = new ArrayList<>();
         lerArquivo(elementos);
         ArrayList<Centroide> centroides = new ArrayList<>();
         lerArquivoCentroide(centroides);
-        KMeans teste = new KMeans(centroides,elementos);
+        KMeansConcorrente teste = new KMeansConcorrente(centroides,elementos);
+        long tempoInicial = System.currentTimeMillis();
         teste.executa();
+        long tempoFinal = System.currentTimeMillis();
+        long tempo = tempoFinal - tempoInicial;
+        System.out.println(tempo);
         for (Centroide c : teste.getCentroides()){
             System.out.println(c.getElementos().size());
         }
