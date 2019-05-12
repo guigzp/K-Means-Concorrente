@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.lang.Thread;
 
+
 public class Paraleliza extends  Thread{
     private ArrayList<Centroide> centroides;
     private ArrayList<Elemento> elementos;
@@ -27,8 +28,7 @@ public class Paraleliza extends  Thread{
                 melhor = c;
             }
         }
-        int aux2 = this.centroides.indexOf(melhor);
-        this.centroides.get(aux2).addElemento(e);
+        e.setIndiceCentroide(this.centroides.indexOf(melhor));
     }
 
     public int calculaDistancia(Elemento e, Centroide c){
