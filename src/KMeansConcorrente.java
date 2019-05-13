@@ -51,13 +51,6 @@ public class KMeansConcorrente {
             for(Elemento e : this.elementos){
                 this.centroides.get(e.getIndiceCentroide()).addElemento(e);
             }
-            /*
-            int cont = 0;
-            for (Centroide c: this.centroides){
-                cont += c.getElementos().size();
-            }
-            System.out.println("Quantidade: " + cont);
-            */
             for(Centroide c : this.centroides){
                 if(c.moveCentroide()){
                     moveu = true;
