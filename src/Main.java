@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import static java.lang.Integer.parseInt;
@@ -39,6 +37,25 @@ public class Main {
             }
             arq.close();
         } catch (IOException e) {
+            System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
+        }
+    }
+
+    private static void escreveSaida(ArrayList<Centroide> centroides, ArrayList<Elemento> elementos, long tempo, int iteracoes , int modo){
+        try {
+            int cont = 0;
+            FileWriter arq = new FileWriter("saida.txt");
+            BufferedWriter escreveArq = new BufferedWriter(arq);
+            escreveArq.append("Base: " + elementos.get(0).getCoordenadas().size() + "\n");
+            escreveArq.append("Execução: "+ (modo == 1 ? "Paralelo" : "Sequencial") + "\n");
+            escreveArq.append("Iterações: " + iteracoes + "\n");
+            escreveArq.append("Tempo de Execução: " + tempo + "\n");
+            for (Elemento e : elementos){
+                escreveArq.append("id=" + cont + ", classe=" + e.getIndiceCentroide() + "\n");
+                cont ++;
+            }
+            arq.close();
+        } catch (IOException e){
             System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
         }
     }
@@ -85,17 +102,34 @@ public class Main {
             default:
                 break;
         }
+
+        do{
+            System.out.println("Digite 1 para Concorrente ou 2 para Sequencial");
+            opcao = entrada.nextInt();
+            if(opcao < 1 || opcao > 2){
+                System.out.println("Opcão Inválida");
+            }
+        }while(opcao < 1 || opcao > 2);
+
         ArrayList<Elemento> elementos = new ArrayList<>();
         ArrayList<Centroide> centroides = new ArrayList<>();
         lerArquivos(centroides, elementos, nomeArquivoCentroide, nomeArquivoBase);
-        KMeansConcorrente teste = new KMeansConcorrente(centroides,elementos);
-        long tempoInicial = System.currentTimeMillis();
-        teste.executa();
-        long tempoFinal = System.currentTimeMillis();
-        long tempo = tempoFinal - tempoInicial;
-        System.out.println(tempo);
-        for (Centroide c : teste.getCentroides()){
-            System.out.println(c.getElementos().size());
+        long tempoInicial, tempoFinal, tempo;
+
+        if(opcao == 1){
+            tempoInicial = System.currentTimeMillis();
+            KMeansConcorrente kmeans = new KMeansConcorrente(centroides,elementos);
+            kmeans.executa();
+            tempoFinal = System.currentTimeMillis();
+            tempo = tempoFinal - tempoInicial;
+            escreveSaida(centroides, elementos, tempo, kmeans.getIteracoes(), 1);
+        }else{
+            tempoInicial = System.currentTimeMillis();
+            KMeans kmeans = new KMeans(centroides,elementos);
+            kmeans.executa();
+            tempoFinal = System.currentTimeMillis();
+            tempo = tempoFinal - tempoInicial;
+            escreveSaida(centroides, elementos, tempo, kmeans.getIteracoes(), 2);
         }
     }
 }

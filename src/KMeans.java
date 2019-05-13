@@ -3,6 +3,14 @@ import java.util.ArrayList;
 public class KMeans {
     private ArrayList<Centroide> centroides;
     private ArrayList<Elemento> elementos;
+    private int iteracoes = 0;
+
+    public int getIteracoes() {
+        return iteracoes;
+    }
+    public void incrementaIteracaoes(){
+        this.iteracoes ++;
+    }
 
     public KMeans(ArrayList<Centroide> centroides, ArrayList<Elemento> elementos) {
         this.centroides = (ArrayList) centroides.clone();
@@ -50,6 +58,7 @@ public class KMeans {
     public void executa(){
         Boolean moveu;
         do{
+            incrementaIteracaoes();
             for (Centroide c : this.centroides){
                 c.getElementos().clear();
             }
