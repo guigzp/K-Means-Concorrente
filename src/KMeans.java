@@ -41,8 +41,7 @@ public class KMeans {
                 melhor = c;
             }
         }
-        int aux2 = this.centroides.indexOf(melhor);
-        this.centroides.get(aux2).addElemento(e);
+        e.setIndiceCentroide( this.centroides.indexOf(melhor));
     }
 
     public int calculaDistancia(Elemento e, Centroide c){
@@ -64,6 +63,9 @@ public class KMeans {
             }
             moveu = false;
             atribuiConjuntos();
+            for(Elemento e : this.elementos){
+                this.centroides.get(e.getIndiceCentroide()).addElemento(e);
+            }
             for(Centroide c : this.centroides){
                 if(c.moveCentroide()){
                     moveu = true;

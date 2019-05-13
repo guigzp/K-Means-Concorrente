@@ -41,7 +41,7 @@ public class Main {
         }
     }
 
-    private static void escreveSaida(ArrayList<Centroide> centroides, ArrayList<Elemento> elementos, long tempo, int iteracoes , int modo){
+    private static void escreveSaida(ArrayList<Elemento> elementos, long tempo, int iteracoes , int modo){
         try {
             int cont = 0;
             FileWriter arq = new FileWriter("saida.txt");
@@ -49,9 +49,10 @@ public class Main {
             escreveArq.append("Base: " + elementos.get(0).getCoordenadas().size() + "\n");
             escreveArq.append("Execução: "+ (modo == 1 ? "Paralelo" : "Sequencial") + "\n");
             escreveArq.append("Iterações: " + iteracoes + "\n");
-            escreveArq.append("Tempo de Execução: " + tempo + "\n");
+            escreveArq.append("Tempo de Execução: " + tempo + " ms\n");
             for (Elemento e : elementos){
                 escreveArq.append("id=" + cont + ", classe=" + e.getIndiceCentroide() + "\n");
+                escreveArq.flush();
                 cont ++;
             }
             arq.close();
@@ -122,14 +123,14 @@ public class Main {
             kmeans.executa();
             tempoFinal = System.currentTimeMillis();
             tempo = tempoFinal - tempoInicial;
-            escreveSaida(centroides, elementos, tempo, kmeans.getIteracoes(), 1);
+            escreveSaida(elementos, tempo, kmeans.getIteracoes(), 1);
         }else{
             tempoInicial = System.currentTimeMillis();
             KMeans kmeans = new KMeans(centroides,elementos);
             kmeans.executa();
             tempoFinal = System.currentTimeMillis();
             tempo = tempoFinal - tempoInicial;
-            escreveSaida(centroides, elementos, tempo, kmeans.getIteracoes(), 2);
+            escreveSaida(elementos, tempo, kmeans.getIteracoes(), 2);
         }
     }
 }
