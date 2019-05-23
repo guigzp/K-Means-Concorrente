@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
@@ -41,13 +42,13 @@ public class Main {
         }
     }
 
-    private static void escreveSaida(ArrayList<Elemento> elementos, long tempo, int iteracoes , int modo){
+    private static void escreveSaida(ArrayList<Elemento> elementos, long tempo, int iteracoes , int modo, int qtdThreads){
         try {
             int cont = 0;
             FileWriter arq = new FileWriter("saida.txt");
             BufferedWriter escreveArq = new BufferedWriter(arq);
             escreveArq.append("Base: " + elementos.get(0).getCoordenadas().size() + "\n");
-            escreveArq.append("Execução: "+ (modo == 1 ? "Paralelo" : "Sequencial") + "\n");
+            escreveArq.append("Execução: "+ (modo == 1 ? "Paralelo \nQuantidade Threads: " + qtdThreads : "Sequencial") + "\n");
             escreveArq.append("Iterações: " + iteracoes + "\n");
             escreveArq.append("Tempo de Execução: " + tempo + " ms\n");
             for (Elemento e : elementos){
@@ -69,7 +70,7 @@ public class Main {
 
 
     public static void main(String[] args) throws InterruptedException{
-        int opcao;
+        int opcao, quantidadeThreads = 0;
         Scanner entrada = new Scanner(System.in);
         String nomeArquivoCentroide ="", nomeArquivoBase="";
         do{
@@ -112,6 +113,16 @@ public class Main {
             }
         }while(opcao < 1 || opcao > 2);
 
+        if(opcao == 1){
+            do{
+                System.out.println("Digite a quantidade de Threads (entre 2 e 20): ");
+                quantidadeThreads = entrada.nextInt();
+                if(quantidadeThreads < 2 || quantidadeThreads > 20){
+                    System.out.println("Quantidade de Threads inválida!");
+                }
+            }while(quantidadeThreads < 2 || quantidadeThreads > 20);
+        }
+
         ArrayList<Elemento> elementos = new ArrayList<>();
         ArrayList<Centroide> centroides = new ArrayList<>();
         lerArquivos(centroides, elementos, nomeArquivoCentroide, nomeArquivoBase);
@@ -119,18 +130,18 @@ public class Main {
 
         if(opcao == 1){
             tempoInicial = System.currentTimeMillis();
-            KMeansConcorrente kmeans = new KMeansConcorrente(centroides,elementos);
+            KMeansConcorrente kmeans = new KMeansConcorrente(centroides,elementos, quantidadeThreads);
             kmeans.executa();
             tempoFinal = System.currentTimeMillis();
             tempo = tempoFinal - tempoInicial;
-            escreveSaida(elementos, tempo, kmeans.getIteracoes(), 1);
+            escreveSaida(elementos, tempo, kmeans.getIteracoes(), 1, quantidadeThreads);
         }else{
             tempoInicial = System.currentTimeMillis();
             KMeans kmeans = new KMeans(centroides,elementos);
             kmeans.executa();
             tempoFinal = System.currentTimeMillis();
             tempo = tempoFinal - tempoInicial;
-            escreveSaida(elementos, tempo, kmeans.getIteracoes(), 2);
+            escreveSaida(elementos, tempo, kmeans.getIteracoes(), 2, quantidadeThreads);
         }
     }
 }

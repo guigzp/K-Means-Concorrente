@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.lang.Thread;
+import java.util.List;
 
 
 public class Paraleliza extends  Thread{
     private ArrayList<Centroide> centroides;
-    private ArrayList<Elemento> elementos;
+    private List<Elemento> elementos;
 
-    public Paraleliza(ArrayList<Centroide> centroides, ArrayList<Elemento> elementos) {
+    public Paraleliza(ArrayList<Centroide> centroides, List<Elemento> elementos) {
         this.centroides = centroides;
         this.elementos = elementos;
     }

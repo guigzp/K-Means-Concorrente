@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 import java.io.IOException;
+import java.util.List;
 
 public class KMeansConcorrente {
     private ArrayList<Centroide> centroides;
     private ArrayList<Elemento> elementos;
     private int iteracoes = 0;
+    private int quantidadeThreads;
 
     public int getIteracoes() {
         return iteracoes;
@@ -13,9 +15,10 @@ public class KMeansConcorrente {
         this.iteracoes ++;
     }
 
-    public KMeansConcorrente(ArrayList<Centroide> centroides, ArrayList<Elemento> elementos) {
+    public KMeansConcorrente(ArrayList<Centroide> centroides, ArrayList<Elemento> elementos, int quantidadeThreads) {
         this.centroides = (ArrayList) centroides.clone();
         this.elementos = (ArrayList) elementos.clone();
+        this.quantidadeThreads = quantidadeThreads;
     }
 
     public ArrayList<Centroide> getCentroides() {
@@ -29,15 +32,17 @@ public class KMeansConcorrente {
     public void executa() throws InterruptedException {
         Boolean moveu;
         ArrayList<Paraleliza> threads = new ArrayList<>();
-        ArrayList<Elemento> elementosAux = new ArrayList<>();
-        ArrayList<Elemento> elementosAux2 = new ArrayList<>();
+        ArrayList<List<Elemento>> elementosThreads = new ArrayList<>();
+        int inicio = 0, qtdElementos = this.elementos.size(),
+                qtdElementosThread = qtdElementos / this.quantidadeThreads, fim = qtdElementosThread;
 
-        for(int i = 0; i < this.elementos.size() / 2; i++){
-            elementosAux.add(this.elementos.get(i));
-        }
-
-        for(int i = this.elementos.size() / 2; i < this.elementos.size(); i++){
-            elementosAux2.add(this.elementos.get(i));
+        for(int i = 0; i < this.quantidadeThreads; i++){
+            if (i == this.quantidadeThreads - 1){
+                fim = qtdElementos;
+            }
+            elementosThreads.add(this.elementos.subList(inicio, fim));
+            inicio = fim;
+            fim += qtdElementosThread;
         }
 
         do{
@@ -47,8 +52,9 @@ public class KMeansConcorrente {
             }
             moveu = false;
 
-            threads.add(new Paraleliza(this.centroides, elementosAux));
-            threads.add(new Paraleliza(this.centroides, elementosAux2));
+            for (int i = 0; i < this.quantidadeThreads; i++){
+                threads.add(new Paraleliza(this.centroides,  elementosThreads.get(i)));
+            }
 
             for(Paraleliza p : threads){
                 p.start();
