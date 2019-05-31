@@ -122,9 +122,6 @@ public class Main {
                 }
             }while(quantidadeThreads < 2 || quantidadeThreads > 20);
         }
-        ArrayList<Long> saida = new ArrayList<>();
-        int cont = 0;
-        while(cont < 3){
 
         ArrayList<Elemento> elementos = new ArrayList<>();
         ArrayList<Centroide> centroides = new ArrayList<>();
@@ -145,12 +142,6 @@ public class Main {
             tempoFinal = System.currentTimeMillis();
             tempo = tempoFinal - tempoInicial;
             escreveSaida(elementos, tempo, kmeans.getIteracoes(), 2, quantidadeThreads);
-        }
-        saida.add(tempo);
-        cont ++;
-        }
-        for (Long l : saida){
-            System.out.println(l);
         }
     }
 }
